@@ -72,6 +72,7 @@ function formatArrivalData(arrivalData) {
       let arrivalTimeString = 'No bus available';
       // Checks if both busTiming and busTiming.time exist and are truthy values
       if (busTiming && busTiming.time) {
+        // Calculates the time difference between the current time and the scheduled arrival time in minutes
         let busTime = new Date(busTiming.time);
         let currentTime = new Date();
         let timeDiff = Math.round((busTime - currentTime) / 60000);
