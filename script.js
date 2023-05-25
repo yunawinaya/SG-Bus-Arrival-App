@@ -5,9 +5,6 @@ const filterDropdownItems = document.querySelectorAll('#filter .dropdown-item');
 const displayBus = document.getElementById('displayBus'); // Element to display bus arrival data
 let currentFilter = ""; // Variable to store the current filter
 
-// Hide the dropdown filter initially
-filterDropdown.style.display = 'none';
-
 // Add click event listeners to filter dropdown items
 for (const item of filterDropdownItems) {
   item.addEventListener('click', function(event) {
@@ -73,6 +70,7 @@ function formatArrivalData(arrivalData) {
     const busTimings = [bus.next, bus.subsequent, bus.next2, bus.next3];
     for (let busTiming of busTimings) {
       let arrivalTimeString = 'No bus available';
+      // Checks if both busTiming and busTiming.time exist and are truthy values
       if (busTiming && busTiming.time) {
         let busTime = new Date(busTiming.time);
         let currentTime = new Date();
