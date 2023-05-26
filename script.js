@@ -5,43 +5,6 @@ const filterDropdownItems = document.querySelectorAll('#filter .dropdown-item');
 const displayBus = document.getElementById('displayBus'); // Element to display bus arrival data
 let currentFilter = ""; // Variable to store the current filter
 
-// Add click event listeners to filter dropdown items
-for (const item of filterDropdownItems) {
-  item.addEventListener('click', function(event) {
-    // prevent the default navigation or page reload that would normally occur when a filter dropdown item is clicked
-    event.preventDefault();
-    const filter = this.getAttribute('data-filter'); // Get the selected filter value from the clicked dropdown item
-
-    // Remove 'active' class from all dropdown items
-    for (const item of filterDropdownItems) {
-      item.classList.remove('active');
-    }
-
-    // Add 'active' class to the clicked dropdown item
-    this.classList.add('active');
-
-    // Apply the selected filter
-    applyFilter(filter);
-  });
-}
-
-// Function to apply the selected filter
-function applyFilter(filter) {
-  currentFilter = filter; // Store the selected filter value
-  const rows = displayBus.querySelectorAll('tbody > tr'); // Get all rows within the bus arrival data table
-
-  // Loop through each row and show/hide based on the filter
-  for (const row of rows) {
-    const busId = row.getAttribute('data-bus-id'); // Get the bus ID associated with the row
-
-    // Show the row if the filter is empty or the busId matches the filter
-    if (filter === "" || busId === filter) {
-      row.style.display = 'table-row'; // Show the row
-    } else {
-      row.style.display = 'none'; // Hide the row
-    }
-  }
-}
 
 // Function to fetch bus arrival data from an API
 async function fetchBusArrival(busStopId) {
@@ -53,6 +16,7 @@ async function fetchBusArrival(busStopId) {
     throw new Error("Error fetching bus arrival data."); // Throw an error if the API request is not successful
   }
 }
+
 
 // Function to format the fetched arrival data into HTML table rows
 function formatArrivalData(arrivalData) {
@@ -92,6 +56,47 @@ function formatArrivalData(arrivalData) {
   return tbody; // Return the formatted table body
 }
 
+
+// Add click event listeners to filter dropdown items
+for (const item of filterDropdownItems) {
+  item.addEventListener('click', function(event) {
+    // prevent the default navigation or page reload that would normally occur when a filter dropdown item is clicked
+    event.preventDefault();
+    const filter = this.getAttribute('data-filter'); // Get the selected filter value from the clicked dropdown item
+
+    // Remove 'active' class from all dropdown items
+    for (const item of filterDropdownItems) {
+      item.classList.remove('active');
+    }
+
+    // Add 'active' class to the clicked dropdown item
+    this.classList.add('active');
+
+    // Apply the selected filter
+    applyFilter(filter);
+  });
+}
+
+
+// Function to apply the selected filter
+function applyFilter(filter) {
+  currentFilter = filter; // Store the selected filter value
+  const rows = displayBus.querySelectorAll('tbody > tr'); // Get all rows within the bus arrival data table
+
+  // Loop through each row and show/hide based on the filter
+  for (const row of rows) {
+    const busId = row.getAttribute('data-bus-id'); // Get the bus ID associated with the row
+
+    // Show the row if the filter is empty or the busId matches the filter
+    if (filter === "" || busId === filter) {
+      row.style.display = 'table-row'; // Show the row
+    } else {
+      row.style.display = 'none'; // Hide the row
+    }
+  }
+}
+
+
 // Function to display the bus arrival data on the webpage
 function displayBusArrival(busStopId) {
   displayBus.innerHTML = 'Loading...'; // Display a loading message while fetching the bus arrival data
@@ -120,6 +125,7 @@ function displayBusArrival(busStopId) {
       console.error("Error:", error); // Log any errors that occur during the process
     });
 }
+
 
 // Function to get the bus timing based on the user input
 function getBusTiming() {
