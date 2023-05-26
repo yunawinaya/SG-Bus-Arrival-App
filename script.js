@@ -76,7 +76,11 @@ function formatArrivalData(arrivalData) {
         let busTime = new Date(busTiming.time);
         let currentTime = new Date();
         let timeDiff = Math.round((busTime - currentTime) / 60000);
-        arrivalTimeString = `${timeDiff} min(s)`;
+        if (parseInt(timeDiff) <= 0) {
+          arrivalTimeString = 'Arrived'
+        } else {
+          arrivalTimeString = `${timeDiff} min(s)`;
+        }
       }
       busItem.innerHTML += `
         <td class="text-center">${arrivalTimeString}</td>
